@@ -141,7 +141,7 @@ export default function BlogArticlePage() {
 
           {/* Article Header */}
           <header className="mb-12">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">{blog.title}</h1>
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">{blog.meta_title}</h1>
 
             <div className="flex flex-wrap items-center gap-6 mb-8 text-gray-600">
               <div className="flex items-center">

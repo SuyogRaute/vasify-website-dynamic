@@ -23,6 +23,7 @@ interface Blog {
   author_email: string
   category_name: string
   category_slug: string
+  meta_title?: string
   tags?: Array<{ id: string; name: string; slug: string }>
 }
 

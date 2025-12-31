@@ -8,10 +8,10 @@ export async function generateMetadata({ params }) {
   
 
   return {
-    title: blog?.meta_title || blog?.title,
+    title: blog?.title || blog?.meta_title,
     description: blog?.meta_description || blog?.excerpt,
     openGraph: {
-      title: blog?.meta_title || blog?.title,
+       title: blog?.title || blog?.meta_title,
       description: blog?.meta_description || blog?.excerpt,
       images: [blog?.featured_image || "/default.jpg"],
     },

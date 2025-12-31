@@ -143,12 +143,12 @@ export default function BlogForm({
       // Use FormData if a file is selected, otherwise JSON
       if (featuredImageFile) {
         body = new FormData();
-        body.append("title", formData.title);
+        body.append("title", formData.metaTitle);
         body.append("content", formData.content);
         body.append("excerpt", formData.excerpt);
         body.append("categoryId", formData.categoryId);
         body.append("status", formData.status);
-        body.append("metaTitle", formData.metaTitle);
+        body.append("metaTitle", formData.title);
         body.append("metaDescription", formData.metaDescription);
         body.append("isFeatured", String(formData.isFeatured));
         body.append("tags", JSON.stringify(formData.tags));
@@ -160,13 +160,13 @@ export default function BlogForm({
       } else {
         // JSON payload if no file
         body = {
-          title: formData.title,
+          title: formData.metaTitle,
           content: formData.content,
           excerpt: formData.excerpt,
           featuredImage: formData.featuredImage,
           categoryId: formData.categoryId,
           status: formData.status,
-          metaTitle: formData.metaTitle,
+          metaTitle: formData.title,
           metaDescription: formData.metaDescription,
           isFeatured: formData.isFeatured,
           tags: formData.tags,
@@ -226,13 +226,14 @@ export default function BlogForm({
         {/* Modal Content */}
         <div className="p-6 space-y-6">
           {/* Title */}
+          
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Title <span className="text-red-500">*</span>
+              Title
             </label>
             <input
               type="text"
-              name="title"
+              name="metaTitle"
               value={formData.title}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -394,21 +395,22 @@ export default function BlogForm({
               </p>
             </div>
           </div>
-
           {/* Meta Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Meta Title (SEO)
+              Meta Title (SEO)<span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              name="metaTitle"
+              name="title"
               value={formData.metaTitle}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="SEO optimized title"
+              placeholder="SEO optimized title "
             />
           </div>
+
+          
 
           {/* Meta Description */}
           <div>
