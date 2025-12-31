@@ -32,13 +32,13 @@ export default function BlogForm({
   useEffect(() => {
     if (editingItem) {
       setFormData({
-        title: editingItem.title || "",
+        title: editingItem.meta_title || "",
         content: editingItem.content || "",
         excerpt: editingItem.excerpt || "",
         featuredImage: editingItem.featured_image || "",
         categoryId: editingItem.category_id || "",
         status: editingItem.status || "draft",
-        metaTitle: editingItem.meta_title || "",
+        metaTitle: editingItem.title || "",
         metaDescription: editingItem.meta_description || "",
         isFeatured: editingItem.is_featured || false,
 
@@ -143,12 +143,12 @@ export default function BlogForm({
       // Use FormData if a file is selected, otherwise JSON
       if (featuredImageFile) {
         body = new FormData();
-        body.append("title", formData.metaTitle);
+        body.append("title", formData.title);
         body.append("content", formData.content);
         body.append("excerpt", formData.excerpt);
         body.append("categoryId", formData.categoryId);
         body.append("status", formData.status);
-        body.append("metaTitle", formData.title);
+        body.append("metaTitle", formData.metaTitle);
         body.append("metaDescription", formData.metaDescription);
         body.append("isFeatured", String(formData.isFeatured));
         body.append("tags", JSON.stringify(formData.tags));
@@ -160,13 +160,13 @@ export default function BlogForm({
       } else {
         // JSON payload if no file
         body = {
-          title: formData.metaTitle,
+          title: formData.title,
           content: formData.content,
           excerpt: formData.excerpt,
           featuredImage: formData.featuredImage,
           categoryId: formData.categoryId,
           status: formData.status,
-          metaTitle: formData.title,
+          metaTitle: formData.metaTitle,
           metaDescription: formData.metaDescription,
           isFeatured: formData.isFeatured,
           tags: formData.tags,
@@ -234,7 +234,7 @@ export default function BlogForm({
             <input
               type="text"
               name="metaTitle"
-              value={formData.title}
+              value={formData.metaTitle}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter blog title"
@@ -403,7 +403,7 @@ export default function BlogForm({
             <input
               type="text"
               name="title"
-              value={formData.metaTitle}
+              value={formData.title}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="SEO optimized title "
