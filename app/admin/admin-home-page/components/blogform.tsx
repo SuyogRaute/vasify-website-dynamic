@@ -416,7 +416,7 @@ export default function BlogForm({
           {/* Meta Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Meta Title (SEO) <span className="text-red-500">*</span>
+              Meta Title (Note: Slug is generated based on the Meta Title) <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
