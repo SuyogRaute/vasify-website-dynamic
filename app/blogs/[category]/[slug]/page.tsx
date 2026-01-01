@@ -8,7 +8,7 @@ export async function generateMetadata({ params }) {
   
 
   return {
-    title: blog?.title || blog?.meta_title,
+    title: blog?.meta_title || blog?.title,
     description: blog?.meta_description || blog?.excerpt,
     openGraph: {
        title: blog?.title || blog?.meta_title,

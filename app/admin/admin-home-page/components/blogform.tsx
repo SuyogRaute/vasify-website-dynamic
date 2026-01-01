@@ -32,13 +32,13 @@ export default function BlogForm({
   useEffect(() => {
     if (editingItem) {
       setFormData({
-        title: editingItem.meta_title || "",
+        title: editingItem.title || "",
         content: editingItem.content || "",
         excerpt: editingItem.excerpt || "",
         featuredImage: editingItem.featured_image || "",
         categoryId: editingItem.category_id || "",
         status: editingItem.status || "draft",
-        metaTitle: editingItem.title || "",
+        metaTitle: editingItem.meta_title || "",
         metaDescription: editingItem.meta_description || "",
         isFeatured: editingItem.is_featured || false,
 
@@ -120,6 +120,21 @@ export default function BlogForm({
     // Validation
     if (!formData.title.trim() || !formData.content.trim()) {
       alert("Title and Content are required");
+      return;
+    }
+
+    if (!formData.excerpt.trim()) {
+      alert("Short Description is required");
+      return;
+    }
+
+    if (!formData.metaTitle.trim()) {
+      alert("Meta Title is required");
+      return;
+    }
+
+    if (!formData.metaDescription.trim()) {
+      alert("Meta Description is required");
       return;
     }
 
@@ -226,18 +241,18 @@ export default function BlogForm({
         {/* Modal Content */}
         <div className="p-6 space-y-6">
           {/* Title */}
-          
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Title
+              Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              name="metaTitle"
-              value={formData.metaTitle}
+              name="title"
+              value={formData.title}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter blog title"
+              required
             />
           </div>
 
@@ -315,6 +330,7 @@ export default function BlogForm({
               rows={10}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Write your blog content here..."
+              required
             />
             <p className="mt-1 text-sm text-gray-500 flex items-center gap-1">
               <Clock className="w-4 h-4" />
@@ -325,7 +341,7 @@ export default function BlogForm({
           {/* Excerpt */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Short Description
+              Short Description <span className="text-red-500">*</span>
             </label>
             <textarea
               name="excerpt"
@@ -334,6 +350,7 @@ export default function BlogForm({
               rows={3}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Brief summary of the blog"
+              required
             />
           </div>
 
@@ -395,27 +412,27 @@ export default function BlogForm({
               </p>
             </div>
           </div>
+
           {/* Meta Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Meta Title (SEO)<span className="text-red-500">*</span>
+              Meta Title (SEO) <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              name="title"
-              value={formData.title}
+              name="metaTitle"
+              value={formData.metaTitle}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="SEO optimized title "
+              placeholder="SEO optimized title"
+              required
             />
           </div>
-
-          
 
           {/* Meta Description */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Meta Description (SEO)
+              Meta Description (SEO) <span className="text-red-500">*</span>
             </label>
             <textarea
               name="metaDescription"
@@ -424,6 +441,7 @@ export default function BlogForm({
               rows={2}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="SEO optimized description"
+              required
             />
           </div>
 

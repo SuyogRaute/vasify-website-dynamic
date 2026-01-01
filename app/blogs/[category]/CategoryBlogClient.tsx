@@ -244,7 +244,7 @@ export default function CategoryBlogClient() {
                       </div>
 
                       <h2 className="text-2xl font-bold text-gray-900 mb-4 line-clamp-2">
-                        {blog.title}
+                        {blog.meta_title}
                       </h2>
 
                       <p className="text-gray-600 mb-6 line-clamp-3">{blog.excerpt}</p>

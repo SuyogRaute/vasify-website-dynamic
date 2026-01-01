@@ -43,6 +43,7 @@ interface Blog {
   author_name: string
   category_name: string
   category_slug: string
+  meta_title?: string
   tags?: Array<{ id: string; name: string; slug: string }>
 }
 
@@ -312,7 +313,7 @@ export default function BlogsPage() {
                     <div className="aspect-video bg-gray-100 rounded-t-xl overflow-hidden">
                       <img
                         src={blog.featured_image || "/placeholder.svg"}
-                        alt={blog.title}
+                        alt={blog.meta_title}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>
@@ -329,7 +330,7 @@ export default function BlogsPage() {
                     </div>
 
                     <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                      {blog.title}
+                      {blog.meta_title}
                     </h3>
 
                     <p className="text-gray-600 mb-4 line-clamp-3">
