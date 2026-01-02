@@ -9,6 +9,7 @@ export default function BlogForm({
 }) {
   const [formData, setFormData] = useState({
     title: "",
+    slug: "",
     content: "",
     excerpt: "",
     featuredImage: "",
@@ -33,6 +34,7 @@ export default function BlogForm({
     if (editingItem) {
       setFormData({
         title: editingItem.title || "",
+        slug: editingItem.slug || "", // ✅ NEW
         content: editingItem.content || "",
         excerpt: editingItem.excerpt || "",
         featuredImage: editingItem.featured_image || "",
@@ -41,12 +43,9 @@ export default function BlogForm({
         metaTitle: editingItem.meta_title || "",
         metaDescription: editingItem.meta_description || "",
         isFeatured: editingItem.is_featured || false,
-
-        // ⭐ FIXED HERE
         tags: Array.isArray(editingItem.tags)
           ? editingItem.tags.map((t) => (typeof t === "string" ? t : t.name))
           : [],
-
         publishedAt: editingItem.published_at
           ? editingItem.published_at.split("T")[0]
           : "",
@@ -58,6 +57,7 @@ export default function BlogForm({
       }
     }
   }, [editingItem]);
+
 
   // Calculate read time
   const calculateReadTime = (content) => {
@@ -142,6 +142,16 @@ export default function BlogForm({
       alert("Please select a category");
       return;
     }
+    if (!formData.slug.trim()) {
+      alert("Slug is required");
+      return;
+    }
+
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(formData.slug)) {
+      alert("Slug format is invalid (use lowercase, numbers, hyphens)");
+      return;
+    }
+
 
     setFormSubmitting(true);
 
@@ -159,6 +169,7 @@ export default function BlogForm({
       if (featuredImageFile) {
         body = new FormData();
         body.append("title", formData.title);
+        body.append("slug", formData.slug);
         body.append("content", formData.content);
         body.append("excerpt", formData.excerpt);
         body.append("categoryId", formData.categoryId);
@@ -176,6 +187,7 @@ export default function BlogForm({
         // JSON payload if no file
         body = {
           title: formData.title,
+          slug: formData.slug,
           content: formData.content,
           excerpt: formData.excerpt,
           featuredImage: formData.featuredImage,
@@ -412,11 +424,37 @@ export default function BlogForm({
               </p>
             </div>
           </div>
+          {/* Slug */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Slug <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="slug"
+              value={formData.slug}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  slug: e.target.value
+                    .toLowerCase()
+                    .replace(/[^a-z0-9-]/g, "")
+                    .replace(/--+/g, "-"),
+                }))
+              }
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="example-blog-slug"
+              required
+            />
+            <p className="mt-1 text-xs text-gray-500">
+              URL: /blogs/{formData.slug || "your-slug"}
+            </p>
+          </div>
 
           {/* Meta Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Meta Title (Note: Slug is generated based on the Meta Title) <span className="text-red-500">*</span>
+              Meta Title(SEO) <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
