@@ -165,133 +165,133 @@ export default function BlogsPage() {
       </section>
 
       {/* Categories Section */}
-<section className="py-16 px-6 mb-20 bg-gradient-to-b from-slate-50 to-white">
-  <div className="container mx-auto">
-    {loading ? (
-      <div className="flex flex-col items-center justify-center py-20">
-        <Loader2 className="h-12 w-12 text-indigo-600 animate-spin mb-4" />
-        <p className="text-gray-700 text-lg font-medium">Loading categories...</p>
-      </div>
-    ) : error ? (
-      <div className="flex flex-col items-center justify-center py-20">
-        <div className="bg-gradient-to-br from-red-50 to-pink-50 border-2 border-red-200 rounded-3xl p-8 max-w-md shadow-lg">
-          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-red-900 text-center mb-2">Error Loading Categories</h3>
-          <p className="text-red-700 text-center mb-6">{error}</p>
-          <Button 
-            onClick={fetchCategories} 
-            className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-lg transition-all"
-          >
-            Try Again
-          </Button>
-        </div>
-      </div>
-    ) : (
-      <>
-        <div className="text-center mb-12">
-          <p className="text-gray-600 text-lg font-medium">
-            Showing {categories.length} of {categories.length} categories
-          </p>
-        </div>
+      <section className="py-16 px-6 mb-20 bg-gradient-to-b from-slate-50 to-white">
+        <div className="container mx-auto">
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <Loader2 className="h-12 w-12 text-indigo-600 animate-spin mb-4" />
+              <p className="text-gray-700 text-lg font-medium">Loading categories...</p>
+            </div>
+          ) : error ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <div className="bg-gradient-to-br from-red-50 to-pink-50 border-2 border-red-200 rounded-3xl p-8 max-w-md shadow-lg">
+                <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-red-900 text-center mb-2">Error Loading Categories</h3>
+                <p className="text-red-700 text-center mb-6">{error}</p>
+                <Button
+                  onClick={fetchCategories}
+                  className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-lg transition-all"
+                >
+                  Try Again
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="text-center mb-12">
+                <p className="text-gray-600 text-lg font-medium">
+                  Showing {categories.length} of {categories.length} categories
+                </p>
+              </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {categories.map((category, index) => {
-             console.log("CATEGORY:", category.name, category.slug)
-            const Icon = categoryIcons[category.slug] || Settings
-            
-            // Beautiful static color schemes rotating through categories
-            const staticColors = [
-              {
-                bg: 'bg-gradient-to-br from-indigo-500 to-purple-600',
-                icon: 'text-white',
-                button: 'from-indigo-500 to-purple-600',
-                border: 'border-indigo-200',
-                shadow: 'hover:shadow-indigo-200/50'
-              },
-              {
-                bg: 'bg-gradient-to-br from-pink-500 to-rose-600',
-                icon: 'text-white',
-                button: 'from-pink-500 to-rose-600',
-                border: 'border-pink-200',
-                shadow: 'hover:shadow-pink-200/50'
-              },
-              {
-                bg: 'bg-gradient-to-br from-emerald-500 to-teal-600',
-                icon: 'text-white',
-                button: 'from-emerald-500 to-teal-600',
-                border: 'border-emerald-200',
-                shadow: 'hover:shadow-emerald-200/50'
-              },
-              {
-                bg: 'bg-gradient-to-br from-amber-500 to-orange-600',
-                icon: 'text-white',
-                button: 'from-amber-500 to-orange-600',
-                border: 'border-amber-200',
-                shadow: 'hover:shadow-amber-200/50'
-              },
-              {
-                bg: 'bg-gradient-to-br from-cyan-500 to-blue-600',
-                icon: 'text-white',
-                button: 'from-cyan-500 to-blue-600',
-                border: 'border-cyan-200',
-                shadow: 'hover:shadow-cyan-200/50'
-              },
-              {
-                bg: 'bg-gradient-to-br from-violet-500 to-purple-600',
-                icon: 'text-white',
-                button: 'from-violet-500 to-purple-600',
-                border: 'border-violet-200',
-                shadow: 'hover:shadow-violet-200/50'
-              },
-            ]
-            
-            const colors = staticColors[index % staticColors.length]
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {categories.map((category, index) => {
+                  console.log("CATEGORY:", category.name, category.slug)
+                  const Icon = categoryIcons[category.slug] || Settings
 
-            return (
-              <Link key={category.id} href={`/blogs/${category.slug}`}>
-                <Card className={`h-full bg-white rounded-2xl shadow-lg ${colors.shadow} hover:shadow-2xl active:shadow-2xl transition-all duration-500 hover:-translate-y-2 active:-translate-y-2 cursor-pointer group overflow-hidden`}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <CardHeader className="text-center pb-4 items-center relative z-10">
-                    {category.image_url ? (
-                      <div className="w-full h-52 mx-auto mb-6 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                        <img
-                          src={category.image_url || "/placeholder.svg"}
-                          alt={category.name}
-                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                        />
-                      </div>
-                    ) : (
-                      <div
-                        className={`w-24 h-24 mx-auto mb-6 ${colors.bg} rounded-3xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}
-                      >
-                        <Icon className={`h-12 w-12 ${colors.icon}`} />
-                      </div>
-                    )}
-                    <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
-                      {category.name}
-                    </CardTitle>
-                  </CardHeader>
-                  
-                  <CardContent className="text-center relative z-10">
-                    <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">
-                      {category.description}
-                    </p>
-                    <Button
-                      className={`bg-gradient-to-r ${colors.button} hover:opacity-90 active:opacity-90 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform group-hover:scale-105`}
-                    >
-                      Explore Articles
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Link>
-            )
-          })}
+                  // Beautiful static color schemes rotating through categories
+                  const staticColors = [
+                    {
+                      bg: 'bg-gradient-to-br from-indigo-500 to-purple-600',
+                      icon: 'text-white',
+                      button: 'from-indigo-500 to-purple-600',
+                      border: 'border-indigo-200',
+                      shadow: 'hover:shadow-indigo-200/50'
+                    },
+                    {
+                      bg: 'bg-gradient-to-br from-pink-500 to-rose-600',
+                      icon: 'text-white',
+                      button: 'from-pink-500 to-rose-600',
+                      border: 'border-pink-200',
+                      shadow: 'hover:shadow-pink-200/50'
+                    },
+                    {
+                      bg: 'bg-gradient-to-br from-emerald-500 to-teal-600',
+                      icon: 'text-white',
+                      button: 'from-emerald-500 to-teal-600',
+                      border: 'border-emerald-200',
+                      shadow: 'hover:shadow-emerald-200/50'
+                    },
+                    {
+                      bg: 'bg-gradient-to-br from-amber-500 to-orange-600',
+                      icon: 'text-white',
+                      button: 'from-amber-500 to-orange-600',
+                      border: 'border-amber-200',
+                      shadow: 'hover:shadow-amber-200/50'
+                    },
+                    {
+                      bg: 'bg-gradient-to-br from-cyan-500 to-blue-600',
+                      icon: 'text-white',
+                      button: 'from-cyan-500 to-blue-600',
+                      border: 'border-cyan-200',
+                      shadow: 'hover:shadow-cyan-200/50'
+                    },
+                    {
+                      bg: 'bg-gradient-to-br from-violet-500 to-purple-600',
+                      icon: 'text-white',
+                      button: 'from-violet-500 to-purple-600',
+                      border: 'border-violet-200',
+                      shadow: 'hover:shadow-violet-200/50'
+                    },
+                  ]
+
+                  const colors = staticColors[index % staticColors.length]
+
+                  return (
+                    <Link key={category.id} href={`/blogs/${category.slug}`}>
+                      <Card className={`h-full bg-white rounded-2xl shadow-lg ${colors.shadow} hover:shadow-2xl active:shadow-2xl transition-all duration-500 hover:-translate-y-2 active:-translate-y-2 cursor-pointer group overflow-hidden flex flex-col`}>
+                        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                        <CardHeader className="text-center pb-4 items-center relative z-10">
+                          {category.image_url ? (
+                            <div className="w-full h-52 mx-auto mb-6 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                              <img
+                                src={category.image_url || "/placeholder.svg"}
+                                alt={category.name}
+                                className="w-full h-full object-top object-center transform group-hover:scale-110 transition-transform duration-700"
+                              />
+                            </div>
+                          ) : (
+                            <div
+                              className={`w-24 h-24 mx-auto mb-6 ${colors.bg} rounded-3xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}
+                            >
+                              <Icon className={`h-12 w-12 ${colors.icon}`} />
+                            </div>
+                          )}
+                          <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
+                            {category.name}
+                          </CardTitle>
+                        </CardHeader>
+
+                        <CardContent className="text-center relative z-10 flex-grow flex flex-col justify-between pb-6">
+                          <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">
+                            {category.description}
+                          </p>
+                          <Button
+                            className={`bg-gradient-to-r ${colors.button} hover:opacity-90 active:opacity-90 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform group-hover:scale-105 w-fit mx-auto`}
+                          >
+                            Explore Articles
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  )
+                })}
+              </div>
+            </>
+          )}
         </div>
-      </>
-    )}
-  </div>
-</section>
+      </section>
       {/* ⭐ FEATURED ARTICLES SECTION ⭐ */}
       {!blogsLoading && featuredBlogs.length > 0 && (
         <section className="py-16 px-6">
