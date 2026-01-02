@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 import { X, Loader2, ImageIcon } from "lucide-react";
 
 export default function CategoryForm({ editingItem, onClose, onSubmit }) {
@@ -21,13 +21,24 @@ export default function CategoryForm({ editingItem, onClose, onSubmit }) {
         name: editingItem.name || "",
         description: editingItem.description || "",
         imageUrl: editingItem.image_url || "",
-        isActive:
-          editingItem.is_active !== undefined ? editingItem.is_active : true,
+        isActive: editingItem.is_active === true, // ✅ Fixed: Use strict comparison
       });
       // Set preview for existing image
       if (editingItem.image_url) {
         setImagePreview(editingItem.image_url);
+        setImageError(false);
       }
+    } else {
+      // ✅ Fixed: Reset form when creating new category
+      setFormData({
+        name: "",
+        description: "",
+        imageUrl: "",
+        isActive: true,
+      });
+      setImagePreview("");
+      setImageError(false);
+      setImageFile(null);
     }
   }, [editingItem]);
 
@@ -55,13 +66,12 @@ export default function CategoryForm({ editingItem, onClose, onSubmit }) {
   };
 
   // Remove image
-const removeImage = () => {
-  setImagePreview("");
-  setImageError(false);
-  setImageFile(null); // ✅ important
-  setFormData((prev) => ({ ...prev, imageUrl: "" }));
-};
-
+  const removeImage = () => {
+    setImagePreview("");
+    setImageError(false);
+    setImageFile(null);
+    setFormData((prev) => ({ ...prev, imageUrl: "" }));
+  };
 
   // Handle form submission
   const handleSubmit = async () => {
@@ -75,24 +85,24 @@ const removeImage = () => {
 
     try {
       const endpoint = editingItem
-    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories/${editingItem.id}`
-    : `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`;
+        ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories/${editingItem.id}`
+        : `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`;
 
       const method = editingItem ? "PUT" : "POST";
 
       const formDataPayload = new FormData();
       formDataPayload.append("name", formData.name);
       formDataPayload.append("description", formData.description);
-      formDataPayload.append("isActive", formData.isActive);
+      formDataPayload.append("isActive", formData.isActive.toString()); // ✅ Convert to string
 
       if (imageFile) {
-        formDataPayload.append("image", imageFile); // MUST match multer field
+        formDataPayload.append("image", imageFile);
       }
 
       const response = await fetch(endpoint, {
         method,
         credentials: "include",
-        body: formDataPayload, // ✅ send FormData
+        body: formDataPayload,
       });
 
       const result = await response.json();
@@ -101,13 +111,8 @@ const removeImage = () => {
         throw new Error(result.message || "Failed to save category");
       }
 
-      // Call parent's onSubmit callback
       await onSubmit();
-
-      // Show success message
       alert(`Category ${editingItem ? "updated" : "created"} successfully!`);
-
-      // Close modal
       onClose();
     } catch (err) {
       console.error("Error saving category:", err);

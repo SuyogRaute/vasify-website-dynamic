@@ -171,13 +171,13 @@ export default function FreeGuidePage() {
                   </CardHeader>
 
                   <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between text-sm text-gray-600">
+                    {/* <div className="flex items-center justify-between text-sm text-gray-600">
                       <span>{guide.pages} pages</span>
                       <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-yellow-500 fill-current" />
                         <span>{guide.rating}</span>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="flex items-center space-x-2 text-sm text-gray-600">
                       <Download className="w-4 h-4" />

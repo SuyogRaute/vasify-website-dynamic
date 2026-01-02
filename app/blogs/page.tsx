@@ -140,7 +140,7 @@ export default function BlogsPage() {
       <section className="pt-32 pb-12 px-6">
         <div className="container mx-auto text-center">
           <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Latest Guide Guides on WhatsApp Business, AI & Digital Growth.
+            Latest Guide<span className="text-green-500"> Guides </span> on WhatsApp Business, AI & Digital Growth.
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             Read expert articles, WhatsApp business strategies,

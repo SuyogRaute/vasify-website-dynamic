@@ -491,7 +491,7 @@ export default function GuideForm({ editingItem, categories, onClose, onSubmit }
             />
           </div>
 
-          <div className="border-t pt-4">
+          {/* <div className="border-t pt-4">
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -505,7 +505,7 @@ export default function GuideForm({ editingItem, categories, onClose, onSubmit }
                 <p className="text-xs text-gray-500">Featured guides will be highlighted on your website</p>
               </div>
             </label>
-          </div>
+          </div> */}
 
           <div className="flex gap-3 pt-4 border-t border-gray-200 sticky bottom-0 bg-white">
             <button
